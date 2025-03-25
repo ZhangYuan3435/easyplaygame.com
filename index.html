@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Survivors - Thrilling Online Survival Game | Play Now</title>
+    <meta name="description" content="Play Monster Survivors online for free - an intense survival game where you fight endless waves of monsters. Test your skills now!">
+    <link rel="canonical" href="https://easyplaygame.online/monster-survivors">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            blue: '#007AFF',
+                            indigo: '#5856D6',
+                            purple: '#AF52DE',
+                            pink: '#FF2D55',
+                            red: '#FF3B30',
+                            orange: '#FF9500',
+                            yellow: '#FFCC00',
+                            green: '#34C759',
+                            teal: '#5AC8FA',
+                            gray: '#8E8E93',
+                            lightGray: '#F2F2F7',
+                            darkGray: '#1C1C1E',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwind">
+        @layer base {
+            body {
+                @apply bg-apple-lightGray text-apple-darkGray;
+            }
+            h1 {
+                @apply text-4xl md:text-5xl font-bold mb-4 text-apple-darkGray;
+            }
+            h2 {
+                @apply text-2xl md:text-3xl font-semibold mt-8 mb-4 text-apple-blue;
+            }
+            p {
+                @apply mb-4 text-lg leading-relaxed;
+            }
+        }
+        .game-card {
+            @apply transition-transform duration-200 hover:scale-105 hover:shadow-xl cursor-pointer;
+        }
+        .game-img-fallback {
+            @apply flex items-center justify-center bg-gray-200 text-gray-500 font-semibold;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始状态：显示主页面
+            showHomePage();
+            
+            // 为所有导航按钮添加点击事件
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('href');
+                    
+                    if (target === '#home') {
+                        showHomePage();
+                    } else {
+                        showCategory(target.substring(1)); // 移除 # 符号
+                    }
+                    
+                    // 更新按钮样式
+                    document.querySelectorAll('nav a').forEach(a => {
+                        a.classList.remove('ring-2', 'ring-white');
+                    });
+                    this.classList.add('ring-2', 'ring-white');
+                });
+            });
+
+            // 为logo链接添加点击事件
+            document.querySelector('.logo a').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 显示主页面
+                showHomePage();
+                
+                // 更新导航按钮样式
+                document.querySelectorAll('nav a').forEach(a => {
+                    a.classList.remove('ring-2', 'ring-white');
+                    if (a.getAttribute('href') === '#home') {
+                        a.classList.add('ring-2', 'ring-white');
+                    }
+                });
+            });
+
+            // 为游戏卡片添加点击事件
+            document.querySelectorAll('.game-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const gameId = this.getAttribute('data-game-id');
+                    const categoryId = this.getAttribute('data-category');
+                    
+                    // 显示该分类
+                    showCategory(categoryId);
+                    
+                    // 更新导航按钮样式
+                    document.querySelectorAll('nav a').forEach(a => {
+                        a.classList.remove('ring-2', 'ring-white');
+                        if (a.getAttribute('href') === '#' + categoryId) {
+                            a.classList.add('ring-2', 'ring-white');
+                        }
+                    });
+                    
+                    // 滚动到游戏iframe
+                    document.getElementById(categoryId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // 图片错误处理
+            document.querySelectorAll('.game-img').forEach(img => {
+                img.onerror = function() {
+                    const parent = this.parentElement;
+                    const gameName = this.alt || '游戏';
+                    
+                    // 创建备用内容
+                    const fallback = document.createElement('div');
+                    fallback.className = 'game-img-fallback absolute top-0 left-0 w-full h-full';
+                    fallback.innerHTML = gameName;
+                    
+                    // 替换图片
+                    this.style.display = 'none';
+                    parent.appendChild(fallback);
+                };
+            });
+        });
+        
+        // 显示主页面（游戏缩略图）
+        function showHomePage() {
+            // 显示主页内容
+            document.getElementById('home-content').classList.remove('hidden');
+            
+            // 隐藏所有分类内容
+            document.querySelectorAll('.category-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+        }
+        
+        // 显示特定分类
+        function showCategory(categoryId) {
+            // 隐藏主页内容
+            document.getElementById('home-content').classList.add('hidden');
+            
+            // 隐藏所有分类内容
+            document.querySelectorAll('.category-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // 显示选中的分类内容
+            const selectedCategory = document.getElementById(categoryId);
+            if (selectedCategory) {
+                selectedCategory.classList.remove('hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+    <header class="bg-gradient-to-r from-apple-blue to-apple-teal text-white py-4 shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="logo text-2xl md:text-3xl font-bold text-white">
+                <a href="#home" class="flex items-center">
+                    <span class="inline-block mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 10H3V8h18v8zM6 15h2v-2h2v-2H8V9H6v2H4v2h2z"/>
+                            <path d="M14.5 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                            <path d="M18.5 10.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+                        </svg>
+                    </span>
+                    <span>EasyPlayGame</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 游戏分类导航 -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4">
+            <ul class="flex flex-wrap justify-center py-4 space-x-2 md:space-x-4">
+                <li class="mb-2">
+                    <a href="#home" class="inline-block px-4 py-2 bg-apple-darkGray text-white rounded-full hover:bg-apple-gray transition ring-2 ring-white">Home</a>
+                </li>
+                <li class="mb-2">
+                    <a href="#survival" class="inline-block px-4 py-2 bg-apple-blue text-white rounded-full hover:bg-apple-indigo transition">Survival Games</a>
+                </li>
+                <li class="mb-2">
+                    <a href="#action" class="inline-block px-4 py-2 bg-apple-red text-white rounded-full hover:bg-apple-pink transition">Action Games</a>
+                </li>
+                <li class="mb-2">
+                    <a href="#adventure" class="inline-block px-4 py-2 bg-apple-green text-white rounded-full hover:bg-apple-teal transition">Adventure Games</a>
+                </li>
+                <li class="mb-2">
+                    <a href="#shooting" class="inline-block px-4 py-2 bg-apple-purple text-white rounded-full hover:bg-apple-indigo transition">Shooting Games</a>
+                </li>
+                <li class="mb-2">
+                    <a href="#sports" class="inline-block px-4 py-2 bg-apple-orange text-white rounded-full hover:bg-apple-yellow transition">Sports Games</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- 主页面内容 - 显示游戏缩略图 -->
+        <div id="home-content" class="pb-8 max-w-6xl mx-auto">
+            <!-- Survival Games 部分 -->
+            <div class="mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center bg-gradient-to-r from-apple-blue to-apple-teal bg-clip-text text-transparent">Survival Games</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="game-card rounded-xl overflow-hidden shadow-lg bg-white" data-game-id="monster-survivors" data-category="survival">
+                        <div class="relative pb-[56.25%] h-0 bg-apple-lightGray">
+                            <img src="https://raw.githubusercontent.com/ZhangYuan3435/easyplaygame.com/main/image/Monster%20Survivors.jpg" alt="Monster Survivors" class="game-img absolute top-0 left-0 w-full h-full object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-apple-blue mb-2">Monster Survivors</h3>
+                            <p class="text-sm text-gray-600">Fight endless waves of monsters in this thrilling survival game!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Games 部分 -->
+            <div class="mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center bg-gradient-to-r from-apple-red to-apple-orange bg-clip-text text-transparent">Action Games</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="game-card rounded-xl overflow-hidden shadow-lg bg-white" data-game-id="zombie-crusher" data-category="action">
+                        <div class="relative pb-[56.25%] h-0 bg-apple-lightGray">
+                            <img src="https://raw.githubusercontent.com/ZhangYuan3435/easyplaygame.com/main/image/zombie-crusher-ooz.jpg" alt="Zombie Crusher OOZ" class="game-img absolute top-0 left-0 w-full h-full object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-apple-red mb-2">Zombie Crusher OOZ</h3>
+                            <p class="text-sm text-gray-600">Crush zombies in this action-packed adventure!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Adventure Games 部分 -->
+            <div class="mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center bg-gradient-to-r from-apple-green to-apple-teal bg-clip-text text-transparent">Adventure Games</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="game-card rounded-xl overflow-hidden shadow-lg bg-white" data-game-id="stronghold-dude" data-category="adventure">
+                        <div class="relative pb-[56.25%] h-0 bg-apple-lightGray">
+                            <img src="https://raw.githubusercontent.com/ZhangYuan3435/easyplaygame.com/main/image/Stronghold%20Dude.jpg" alt="Stronghold Dude" class="game-img absolute top-0 left-0 w-full h-full object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-apple-green mb-2">Stronghold Dude</h3>
+                            <p class="text-sm text-gray-600">Build and defend your stronghold in this epic adventure!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shooting Games 部分 -->
+            <div class="mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center bg-gradient-to-r from-apple-purple to-apple-indigo bg-clip-text text-transparent">Shooting Games</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="game-card rounded-xl overflow-hidden shadow-lg bg-white" data-game-id="hazmob-fps" data-category="shooting">
+                        <div class="relative pb-[56.25%] h-0 bg-apple-lightGray">
+                            <img src="https://raw.githubusercontent.com/ZhangYuan3435/easyplaygame.com/main/image/Hazmob%20FPS%20Online%20Shooter.jpg" alt="Hazmob FPS Online Shooter" class="game-img absolute top-0 left-0 w-full h-full object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-apple-purple mb-2">Hazmob FPS Online Shooter</h3>
+                            <p class="text-sm text-gray-600">Test your shooting skills in intense online battles!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sports Games 部分 -->
+            <div class="mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center bg-gradient-to-r from-apple-orange to-apple-yellow bg-clip-text text-transparent">Sports Games</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="game-card rounded-xl overflow-hidden shadow-lg bg-white" data-game-id="basket-random" data-category="sports">
+                        <div class="relative pb-[56.25%] h-0 bg-apple-lightGray">
+                            <img src="https://raw.githubusercontent.com/ZhangYuan3435/easyplaygame.com/main/image/Basket%20Random.jpg" alt="Basket Random" class="game-img absolute top-0 left-0 w-full h-full object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-apple-orange mb-2">Basket Random</h3>
+                            <p class="text-sm text-gray-600">Experience unpredictable basketball physics fun!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Survival Games 分类 -->
+        <section id="survival" class="category-section mb-16 hidden max-w-4xl mx-auto">
+            <h2 class="category-title text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-apple-blue to-apple-teal bg-clip-text text-transparent">Survival Games</h2>
+            
+            <div class="game-container w-full mx-auto rounded-xl overflow-hidden shadow-xl bg-white mb-8">
+                <div class="relative pb-[56.25%] h-0">
+                    <iframe src="https://cloud.onlinegames.io/games/2025/unity/monster-survivors/index-og.html" 
+                            class="absolute top-0 left-0 w-full h-full border-0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="game-details mb-12 mx-auto">
+                <h2>Game Overview</h2>
+                <p>Monster Survivors is an exhilarating survival game that tests your ability to withstand waves of increasingly challenging monsters. With simple controls but deep strategy, this game offers hours of entertainment as you fight to survive as long as possible.</p>
+                
+                <h2>How to Play</h2>
+                <p>Use arrow keys or WASD to move your character. Automatically attack nearby enemies and collect experience points to level up. Choose new abilities and upgrades as you progress to become stronger and face the mounting monster threat.</p>
+                
+                <h2>Game Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-blue">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-blue">Endless Action</h3>
+                        <p class="text-base">Face increasingly difficult waves of monsters in an endless survival challenge.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-green">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-green">Character Progression</h3>
+                        <p class="text-base">Level up your character and unlock powerful abilities to combat stronger enemies.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-purple">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-purple">Various Enemies</h3>
+                        <p class="text-base">Battle different types of monsters, each with unique behaviors and attack patterns.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-orange">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-orange">Power-ups & Items</h3>
+                        <p class="text-base">Collect power-ups and items to enhance your character and survive longer.</p>
+                    </div>
+                </div>
+                
+                <h2>Strategy Tips</h2>
+                <p>Success in Monster Survivors requires careful planning and quick reflexes. Focus on movement to avoid being surrounded, prioritize upgrades that complement your playstyle, and remember that sometimes retreating is the best option to regroup and attack from a better position.</p>
+                
+                <h2>About Monster Survivors</h2>
+                <p>Monster Survivors draws inspiration from popular roguelike games while adding its own unique twist. The game balances accessibility for new players with depth for experienced gamers, creating an engaging experience that keeps you coming back for "just one more run".</p>
+            </div>
+        </section>
+
+        <!-- Action Games 分类 -->
+        <section id="action" class="category-section mb-16 hidden max-w-4xl mx-auto">
+            <h2 class="category-title text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-apple-red to-apple-orange bg-clip-text text-transparent">Action Games</h2>
+            
+            <div class="game-container w-full mx-auto rounded-xl overflow-hidden shadow-xl bg-white mb-8">
+                <div class="relative pb-[56.25%] h-0">
+                    <iframe src="https://www.crazygames.com/embed/zombie-crusher-ooz" 
+                            class="absolute top-0 left-0 w-full h-full border-0"
+                            frameborder="0" 
+                            allow="gamepad *;"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="game-details mb-12 mx-auto">
+                <h2>Zombie Crusher OOZ</h2>
+                <p>Zombie Crusher OOZ is an action-packed zombie killing game where you must survive against hordes of the undead. Take control of powerful weapons and vehicles to crush, shoot, and destroy zombies in this adrenaline-fueled adventure.</p>
+                
+                <h2>How to Play</h2>
+                <p>Use your mouse or touchscreen to aim and shoot. Control your character's movement with WASD or arrow keys. Collect powerups, upgrade your arsenal, and strategically eliminate the zombie threat to progress through increasingly challenging levels.</p>
+                
+                <h2>Game Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-red">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-red">Zombie Crushing Action</h3>
+                        <p class="text-base">Destroy zombies with a variety of weapons and vehicles in fast-paced combat scenarios.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-orange">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-orange">Arsenal Upgrades</h3>
+                        <p class="text-base">Unlock and upgrade powerful weapons to deal with increasingly difficult zombie swarms.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-pink">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-pink">Challenging Levels</h3>
+                        <p class="text-base">Face progressively harder challenges as you advance through the game's levels and environments.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-purple">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-purple">Zombie Varieties</h3>
+                        <p class="text-base">Battle different types of zombies, each with unique abilities and weaknesses to exploit.</p>
+                    </div>
+                </div>
+                
+                <h2>Strategy Tips</h2>
+                <p>Prioritize targets based on threat level, conserve ammunition when possible, and utilize environmental advantages. Learn each zombie type's weaknesses and adapt your tactics accordingly for maximum efficiency in eliminating the undead threat.</p>
+                
+                <h2>About Zombie Crusher OOZ</h2>
+                <p>Zombie Crusher OOZ combines classic zombie survival elements with fast-paced action gameplay. Its intuitive controls and addictive gameplay make it accessible to casual gamers while offering enough depth and challenge to satisfy experienced players looking for intense zombie-slaying action.</p>
+            </div>
+        </section>
+
+        <!-- Adventure Games 分类 -->
+        <section id="adventure" class="category-section mb-16 hidden max-w-4xl mx-auto">
+            <h2 class="category-title text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-apple-green to-apple-teal bg-clip-text text-transparent">Adventure Games</h2>
+            
+            <div class="game-container w-full mx-auto rounded-xl overflow-hidden shadow-xl bg-white mb-8">
+                <div class="relative pb-[56.25%] h-0">
+                    <iframe src="https://www.crazygames.com/embed/stronghold-dude" 
+                            class="absolute top-0 left-0 w-full h-full border-0"
+                            frameborder="0" 
+                            allow="gamepad *;"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="game-details mb-12 mx-auto">
+                <h2>Stronghold Dude</h2>
+                <p>Stronghold Dude is an exciting adventure game that combines strategy, exploration, and combat. Embark on an epic journey to build and defend your stronghold while exploring a vast and dangerous world filled with enemies and treasures.</p>
+                
+                <h2>How to Play</h2>
+                <p>Control your character using arrow keys or WASD. Build and upgrade your stronghold by collecting resources and defeating enemies. Explore the environment to discover new areas, unlock special abilities, and face challenging bosses.</p>
+                
+                <h2>Game Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-green">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-green">Stronghold Building</h3>
+                        <p class="text-base">Construct and strengthen your fortress with various defensive structures and upgrades.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-teal">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-teal">Epic Adventure</h3>
+                        <p class="text-base">Explore diverse environments, from mysterious forests to dangerous dungeons, each with unique challenges.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-blue">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-blue">Resource Management</h3>
+                        <p class="text-base">Gather and manage various resources to upgrade your character and stronghold capabilities.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-indigo">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-indigo">Enemy Encounters</h3>
+                        <p class="text-base">Face a variety of foes, from small minions to powerful bosses, requiring different tactical approaches.</p>
+                    </div>
+                </div>
+                
+                <h2>Strategy Tips</h2>
+                <p>Balance your time between strengthening your stronghold and exploring new areas. Prioritize critical defensive upgrades early in the game, and don't neglect resource collection. When encountering tough enemies, observe their attack patterns before engaging directly.</p>
+                
+                <h2>About Stronghold Dude</h2>
+                <p>Stronghold Dude offers a perfect blend of adventure, strategy, and action gameplay. With its engaging storyline and challenging gameplay mechanics, it provides hours of entertaining content as you build, defend, explore, and conquer in this immersive adventure world.</p>
+            </div>
+        </section>
+
+        <!-- Shooting Games 分类 -->
+        <section id="shooting" class="category-section mb-16 hidden max-w-4xl mx-auto">
+            <h2 class="category-title text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-apple-purple to-apple-indigo bg-clip-text text-transparent">Shooting Games</h2>
+            
+            <div class="game-container w-full mx-auto rounded-xl overflow-hidden shadow-xl bg-white mb-8">
+                <div class="relative pb-[56.25%] h-0">
+                    <iframe src="https://www.crazygames.com/embed/hazmob-fps-online-shooter" 
+                            class="absolute top-0 left-0 w-full h-full border-0"
+                            frameborder="0" 
+                            allow="gamepad *;"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="game-details mb-12 mx-auto">
+                <h2>Hazmob FPS Online Shooter</h2>
+                <p>Hazmob FPS Online Shooter is an intense first-person shooter game that puts your combat skills to the test in fast-paced multiplayer battles. Engage in thrilling firefights across various maps with different weapons and tactical options.</p>
+                
+                <h2>How to Play</h2>
+                <p>Use WASD to move, mouse to aim, and left-click to shoot. R to reload, Space to jump, and Shift to sprint. Choose your weapons wisely depending on the map and situation. Work with teammates when in team modes to secure victory through strategic coordination.</p>
+                
+                <h2>Game Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-purple">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-purple">Online Multiplayer</h3>
+                        <p class="text-base">Compete against players from around the world in various game modes and maps.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-indigo">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-indigo">Weapon Arsenal</h3>
+                        <p class="text-base">Choose from a diverse selection of firearms, each with unique handling, damage, and tactical advantages.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-blue">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-blue">Tactical Gameplay</h3>
+                        <p class="text-base">Employ strategic positioning, map awareness, and resource management to outmaneuver opponents.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-pink">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-pink">Character Customization</h3>
+                        <p class="text-base">Personalize your shooter with various skins, equipment, and loadout options as you progress.</p>
+                    </div>
+                </div>
+                
+                <h2>Strategy Tips</h2>
+                <p>Learn the maps and common player routes to gain a positional advantage. Practice weapon recoil control for more accurate shots. When low on health, don't hesitate to retreat and recuperate before re-engaging. Communication with teammates is crucial in team-based modes.</p>
+                
+                <h2>About Hazmob FPS Online Shooter</h2>
+                <p>Hazmob FPS Online Shooter delivers the ultimate first-person shooter experience with its smooth controls, responsive gameplay, and competitive multiplayer environment. Whether you're a casual player looking for quick action or a competitive gamer seeking to test your skills, this game offers an immersive shooting experience that will keep you coming back for more.</p>
+            </div>
+        </section>
+
+        <!-- Sports Games 分类 -->
+        <section id="sports" class="category-section mb-16 hidden max-w-4xl mx-auto">
+            <h2 class="category-title text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-apple-orange to-apple-yellow bg-clip-text text-transparent">Sports Games</h2>
+            
+            <div class="game-container w-full mx-auto rounded-xl overflow-hidden shadow-xl bg-white mb-8">
+                <div class="relative pb-[56.25%] h-0">
+                    <iframe src="https://www.crazygames.com/embed/basket-random" 
+                            class="absolute top-0 left-0 w-full h-full border-0"
+                            frameborder="0" 
+                            allow="gamepad *;"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="game-details mb-12 mx-auto">
+                <h2>Basket Random</h2>
+                <p>Basket Random is a quirky and entertaining basketball game with unpredictable physics and gameplay elements. Shoot hoops in various unusual environments and situations, facing random challenges that make each game a unique experience.</p>
+                
+                <h2>How to Play</h2>
+                <p>Use your mouse or touchscreen to aim and shoot the ball. Adjust your shooting power and angle to account for the random elements in each level. Timing and precision are key, but be prepared for unexpected twists that will test your adaptability as well as your basketball skills.</p>
+                
+                <h2>Game Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-orange">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-orange">Random Challenges</h3>
+                        <p class="text-base">Face unpredictable obstacles and situations that change with each game session.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-yellow">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-yellow">Unique Environments</h3>
+                        <p class="text-base">Play basketball in a variety of whimsical settings, each with their own physics and challenges.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-green">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-green">Progressive Difficulty</h3>
+                        <p class="text-base">Encounter increasingly challenging levels that test your shooting skills and adaptability.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-apple-red">
+                        <h3 class="text-xl font-semibold mb-2 text-apple-red">Fun Physics</h3>
+                        <p class="text-base">Experience entertaining and sometimes hilarious physics-based gameplay that defies conventional basketball rules.</p>
+                    </div>
+                </div>
+                
+                <h2>Strategy Tips</h2>
+                <p>Observe each level carefully before shooting to identify potential obstacles and opportunities. Practice your timing and power control to master different shooting scenarios. Don't get frustrated by the random elements—adaptability is part of the fun! Sometimes a seemingly impossible shot can lead to unexpected success.</p>
+                
+                <h2>About Basket Random</h2>
+                <p>Basket Random puts a delightful twist on traditional basketball games by introducing unpredictable elements that make every shot an adventure. Perfect for casual players looking for something different, this game combines skill-based gameplay with random challenges that create moments of both frustration and triumph. Its lighthearted approach to sports gaming ensures an entertaining experience that doesn't take itself too seriously.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-apple-darkGray text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">&copy; 2025 easyplaygame.online - All rights reserved</p>
+            <p class="text-sm text-apple-gray">All games featured on this website are available for free play. This website is not affiliated with the game developers.</p>
+        </div>
+    </footer>
+</body>
+</html> 
